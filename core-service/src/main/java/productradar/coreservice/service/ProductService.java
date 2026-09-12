@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import productradar.coreservice.exception.ProductNotFoundException;
 import productradar.coreservice.mapper.ProductMapper;
 import productradar.coreservice.product.Product;
 import productradar.coreservice.product.ProductRequest;
@@ -28,7 +29,7 @@ public class ProductService {
 
     public ProductResponse getProduct(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException(id));
         return productMapper.toResponse(product);
     }
 
